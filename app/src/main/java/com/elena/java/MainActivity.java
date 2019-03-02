@@ -7,9 +7,23 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+
+//import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+//import com.firebase.ui.auth;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        FirebaseApp.initializeApp(this);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -34,8 +49,55 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // click handling code
-                TextView textView= (TextView)findViewById(R.id.textView);
+                TextView textView = (TextView) findViewById(R.id.textView);
                 textView.setText("Runinas");
+
+ /*               List<AuthUI.IdpConfig> providers = Arrays.asList(
+                        new AuthUI.IdpConfig.EmailBuilder().build(),
+                        new AuthUI.IdpConfig.PhoneBuilder().build(),
+                        new AuthUI.IdpConfig.GoogleBuilder().build(),
+                        new AuthUI.IdpConfig.FacebookBuilder().build(),
+                        new AuthUI.IdpConfig.TwitterBuilder().build());
+
+// Create and launch sign-in intent
+                startActivityForResult(
+                        AuthUI.getInstance()
+                                .createSignInIntentBuilder()
+                                .setAvailableProviders(providers)
+                                .build(),
+                        RC_SIGN_IN);*/
+                try {
+
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    database.setPersistenceEnabled(true);
+                    DatabaseReference myRef = database.getReference("duomenys");
+
+                    myRef.setValue("Hello, World!");
+
+                    textView.setText("iraseme");
+
+                    // Read from the database
+                    myRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // This method is called once with the initial value and again
+                            // whenever data at this location is updated.
+                            String value = dataSnapshot.getValue(String.class);
+                            TextView textView = (TextView) findViewById(R.id.textView);
+                            textView.setText( "Value is: " + value);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                            TextView textView = (TextView) findViewById(R.id.textView);
+                            textView.setText("Failed to read value."+ error.toException());
+                        }
+                    });
+                } catch (Exception ex) {
+                    textView.setText(ex.getMessage());
+                }
+
             }
         });
     }

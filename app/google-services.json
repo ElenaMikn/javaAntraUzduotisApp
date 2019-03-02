@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "441996979118-m6pflf5if679blv5dqo33rcd4ltqi1ut.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elena.java",
+            "certificate_hash": "65ae1c6cd8fd769a0025078866748494f787bc42"
+          }
+        },
+        {
           "client_id": "441996979118-tt6hrkvjim7hsq8ngpo0u9n8ggggdfum.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "441996979118-tt6hrkvjim7hsq8ngpo0u9n8ggggdfum.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
