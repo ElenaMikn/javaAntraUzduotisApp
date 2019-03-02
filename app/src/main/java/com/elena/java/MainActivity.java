@@ -12,44 +12,36 @@ import android.view.MenuItem;
 
 
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.AuthUI.IdpConfig;
-import com.firebase.ui.auth.AuthUI.IdpConfig.Builder;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-//import com.firebase.ui.auth;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      try {
+        try {
             List<AuthUI.IdpConfig> providers = Arrays.asList(
-                    //new AuthUI.IdpConfig.EmailBuilder().build(),
-                    //new AuthUI.IdpConfig.PhoneBuilder().build()
                     new AuthUI.IdpConfig.GoogleBuilder().build()
-                    //new AuthUI.IdpConfig.FacebookBuilder().build(),
-                    //new AuthUI.IdpConfig.TwitterBuilder().build()
             );
             FirebaseAuth auth = FirebaseAuth.getInstance();
-            startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers)
+            startActivityForResult(AuthUI.getInstance().
+                            createSignInIntentBuilder().
+                            setAvailableProviders(providers)
                             .build(),
                     1
             );
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             TextView textView = (TextView) findViewById(R.id.textView);
             textView.setText(ex.getMessage());
         }
@@ -66,34 +58,31 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
         TextView textView = (TextView) findViewById(R.id.textView);
-        Button button= (Button)findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener(){
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 try {
-
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    database.setPersistenceEnabled(true);
                     DatabaseReference myRef = database.getReference("duomenys");
+                    TextView date = (TextView) findViewById(R.id.date);
+                    myRef.setValue(date.getText().toString());
 
                     myRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            // This method is called once with the initial value and again
-                            // whenever data at this location is updated.
                             String value = dataSnapshot.getValue(String.class);
                             TextView textView = (TextView) findViewById(R.id.textView);
-                            textView.setText( "Value is: " + value);
+                            textView.setText("Doumenis yra: " + value);
                         }
 
                         @Override
                         public void onCancelled(DatabaseError error) {
                             // Failed to read value
                             TextView textView = (TextView) findViewById(R.id.textView);
-                            textView.setText("Failed to read value."+ error.toException());
+                            textView.setText("Skaitymo klaida:" + error.toException());
                         }
                     });
                 } catch (Exception ex) {
@@ -104,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -125,5 +115,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    
+
 }
