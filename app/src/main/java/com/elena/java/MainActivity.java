@@ -11,7 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-//import com.google.firebase.auth.FirebaseAuth;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.AuthUI.IdpConfig;
+import com.firebase.ui.auth.AuthUI.IdpConfig.Builder;
+import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.ValueEventListener;
@@ -35,6 +38,43 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         FirebaseApp.initializeApp(this);
 
+        try {
+            List<AuthUI.IdpConfig> providers = Arrays.asList(
+                    //new AuthUI.IdpConfig.EmailBuilder().build(),
+                    //new AuthUI.IdpConfig.PhoneBuilder().build(),
+                    new AuthUI.IdpConfig.GoogleBuilder().build()
+                    //new AuthUI.IdpConfig.FacebookBuilder().build(),
+                    //new AuthUI.IdpConfig.TwitterBuilder().build()
+            );
+
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers)
+                            .build(),
+                    0b1
+            );
+        }
+        catch (Exception ex) {
+            TextView textView = (TextView) findViewById(R.id.textView);
+            textView.setText(ex.getMessage());
+        }
+        /*
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                new AuthUI.IdpConfig.PhoneBuilder().build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build(),
+                new AuthUI.IdpConfig.FacebookBuilder().build(),
+                new AuthUI.IdpConfig.TwitterBuilder().build());
+*/
+        /*
+// Create and launch sign-in intent
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .build(),
+                9001);
+*/
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,15 +83,14 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
+        TextView textView = (TextView) findViewById(R.id.textView);
         Button button= (Button)findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                // click handling code
-                TextView textView = (TextView) findViewById(R.id.textView);
-                textView.setText("Runinas");
 
+       /*
+*/
  /*               List<AuthUI.IdpConfig> providers = Arrays.asList(
                         new AuthUI.IdpConfig.EmailBuilder().build(),
                         new AuthUI.IdpConfig.PhoneBuilder().build(),
@@ -74,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
                     myRef.setValue("Hello, World!");
 
-                    textView.setText("iraseme");
+                    //textView.setText("iraseme");
 
                     // Read from the database
                     myRef.addValueEventListener(new ValueEventListener() {
@@ -95,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 } catch (Exception ex) {
+                    TextView textView = (TextView) findViewById(R.id.textView);
                     textView.setText(ex.getMessage());
                 }
 
