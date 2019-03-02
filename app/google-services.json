@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "441996979118",
+    "firebase_url": "https://javaantrauzduotis.firebaseio.com",
+    "project_id": "javaantrauzduotis",
+    "storage_bucket": "javaantrauzduotis.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441996979118:android:0db61b92a2f9a605",
+        "android_client_info": {
+          "package_name": "com.elena.java"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "441996979118-tt6hrkvjim7hsq8ngpo0u9n8ggggdfum.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBe282l5sGs11-0rUW02246y1y7X86Dfiw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
