@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             String value = dataSnapshot.getValue(String.class);
                             TextView textView = (TextView) findViewById(R.id.textView);
-                            textView.setText("Doumenis yra: " + value);
+                            textView.setText("Duomenys  yra: " + value);
                         }
 
                         @Override
